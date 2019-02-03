@@ -7,18 +7,12 @@ class Main extends Component {
         return (
 
             <div className='container'>
-
                 <div className="row">
-
                     <Header/>
-
                 </div>
-
-
             </div>
         )
     }
 
 }
-
 export default Main;

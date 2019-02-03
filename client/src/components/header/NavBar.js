@@ -1,32 +1,28 @@
 import React from 'react'
+import Logo from './Logo';
 
 const NavBar = () => {
-
     return (
 
         <div>
-
-            <nav className="navbar navbar-toggleable-sm navbar-inverse bg-inverse">
-                <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                        data-target="#navbar" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <a className="navbar-brand" href="#">Acme</a>
-                <div className="collapse navbar-collapse justify-content-between" id="navbar">
-                    <div className="navbar-nav">
-                        <a className="nav-item nav-link" href="#">Ball Bearings</a>
-                        <a className="nav-item nav-link" href="#">TNT Boxes</a>
+            <nav className="navbar navbar-default">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <a className="navbar-brand" href="#"><Logo/></a>
                     </div>
-                    <div className="navbar-nav">
-                        <a className="nav-item nav-link" href="#">Logout</a>
-                    </div>
+                    {/* <ul className="nav navbar-nav">
+                        <li className="active"><a href="#">Home</a></li>
+                        <li><a href="#">Page 1</a></li>
+                        <li><a href="#">Page 2</a></li>
+                    </ul>*/}
+                    <ul className="nav navbar-nav navbar-right">
+                        <li><a href="#"><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li><a href="#"><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
                 </div>
             </nav>
 
-
         </div>
-
     );
 }
 export default NavBar;
