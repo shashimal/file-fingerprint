@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import Header from './components/header/Header'
+import Header from './components/Header/Header'
+import Uploader from './components/Upload/Uploader'
 
 class Main extends Component {
 
@@ -9,6 +10,7 @@ class Main extends Component {
             <div className='container'>
                 <div className="row">
                     <Header/>
+                    <Uploader/>
                 </div>
             </div>
         )

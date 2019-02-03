@@ -8,7 +8,7 @@ const NavBar = () => {
             <nav className="navbar navbar-default">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <a className="navbar-brand" href="#"><Logo/></a>
+                        <Logo/>
                     </div>
                     {/* <ul className="nav navbar-nav">
                         <li className="active"><a href="#">Home</a></li>
