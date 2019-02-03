@@ -19,3 +19,11 @@ export const cancelFileUpload = ()=> {
         type: "CANCEL_FILE_UPLOAD"
     }
 };
+
+export const setCryptoValues = (cryptoObject)=> {
+    return {
+        type: "SET_CRYPTO_VALUES",
+        cryptoObject: cryptoObject
+
+    }
+};

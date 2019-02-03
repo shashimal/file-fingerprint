@@ -2,29 +2,48 @@ import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import FileInfo from "./FileInfo";
 import {connect} from 'react-redux';
-import {captureFile,readFileContent,cancelFileUpload} from '../../actions/index'
+import CryptoJS from 'crypto-js';
+
+import {captureFile, readFileContent, cancelFileUpload,setCryptoValues} from '../../actions/index'
 
 class Uploader extends Component {
 
 
-    onDrop = (files)=> {
-        if(files.length >0) {
+    onDrop = (files) => {
+        if (files.length > 0) {
             this.props.captureFile(files[0]);
-            this.readFile(files[0])
+            this.readFile(files[0]);
+
+
         }
     };
 
-    readFile= (file) =>{
+    readFile = (file) => {
         const reader = new window.FileReader();
         reader.readAsArrayBuffer(file);
         reader.onloadend = () => {
-            this.props.readFileContent( Buffer(reader.result));
+            let result  = Buffer(reader.result)
+            this.props.readFileContent(result);
+
+            this.props.setCryptoValues(this.generateCryptoValues(result));
 
         }
     };
 
-    onCancel = ()=> {
-       this.props.cancelFileUpload();
+    onCancel = () => {
+        this.props.cancelFileUpload();
+    };
+
+    generateCryptoValues = (file) => {
+
+        const cryptoOjbect = {
+            md5: CryptoJS.MD5(file).toString(),
+            sha1: CryptoJS.SHA1(file).toString(),
+            sha256: CryptoJS.SHA256(file).toString(),
+        };
+        console.log(cryptoOjbect)
+        return cryptoOjbect;
+
     };
 
 
@@ -49,10 +68,10 @@ class Uploader extends Component {
         };
 
 
-        let fileDetails =  "";
+        let fileDetails = "";
 
-        if(this.props.fileObject.fileMetadata != null) {
-            fileDetails =  <FileInfo file={this.props.fileObject.fileMetadata}/>
+        if (this.props.fileObject.fileMetadata != null) {
+            fileDetails = <FileInfo fileObject={this.props.fileObject}/>
         }
 
         return (
@@ -95,4 +114,4 @@ const mapStateToProps = (state) => {
 };
 
 
-export default connect(mapStateToProps,{captureFile,readFileContent,cancelFileUpload})(Uploader);
+export default connect(mapStateToProps, {captureFile, readFileContent, cancelFileUpload,setCryptoValues})(Uploader);
