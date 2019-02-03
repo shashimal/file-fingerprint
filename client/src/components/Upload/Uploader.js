@@ -1,25 +1,31 @@
 import React, {Component} from 'react';
 import Dropzone from 'react-dropzone';
 import FileInfo from "./FileInfo";
+import {connect} from 'react-redux';
+import {captureFile,readFileContent,cancelFileUpload} from '../../actions/index'
 
 class Uploader extends Component {
 
-    constructor() {
-        super()
-        this.state = {
-            files: []
+
+    onDrop = (files)=> {
+        if(files.length >0) {
+            this.props.captureFile(files[0]);
+            this.readFile(files[0])
         }
-    }
+    };
 
-    onDrop(files) {
-        this.setState({files});
-    }
+    readFile= (file) =>{
+        const reader = new window.FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onloadend = () => {
+            this.props.readFileContent( Buffer(reader.result));
 
-    onCancel() {
-        this.setState({
-            files: []
-        });
-    }
+        }
+    };
+
+    onCancel = ()=> {
+       this.props.cancelFileUpload();
+    };
 
 
     render() {
@@ -45,8 +51,8 @@ class Uploader extends Component {
 
         let fileDetails =  "";
 
-        if(this.state.files.length > 0) {
-            fileDetails =  <FileInfo file={this.state.files[0]}/>
+        if(this.props.fileObject.fileMetadata != null) {
+            fileDetails =  <FileInfo file={this.props.fileObject.fileMetadata}/>
         }
 
         return (
@@ -55,7 +61,7 @@ class Uploader extends Component {
 
                 <Dropzone
                     multiple={false}
-                    onDrop={this.onDrop.bind(this)}
+                    onDrop={this.onDrop}
                     onFileDialogCancel={this.onCancel.bind(this)}>
 
                     {({getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, acceptedFiles, rejectedFiles}) => {
@@ -64,10 +70,7 @@ class Uploader extends Component {
                         styles = isDragReject ? {...styles, ...rejectStyle} : styles
 
                         return (
-                            <div
-                                {...getRootProps()}
-                                style={styles}
-                            >
+                            <div {...getRootProps()} style={styles}>
                                 <input {...getInputProps()} />
                                 <div>
                                     {isDragAccept ? 'Drop' : 'Drag'} files here...
@@ -80,11 +83,16 @@ class Uploader extends Component {
 
                 {fileDetails}
 
-
             </div>
         );
     }
-
 }
 
-export default Uploader;
+const mapStateToProps = (state) => {
+    return {
+        fileObject: state.fileObject
+    }
+};
+
+
+export default connect(mapStateToProps,{captureFile,readFileContent,cancelFileUpload})(Uploader);

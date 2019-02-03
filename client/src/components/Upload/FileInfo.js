@@ -1,9 +1,7 @@
 import React from 'react'
 
 const FileInfo = (props) => {
-console.log(props.file);
     const lastModified = new Date(props.file.lastModified).toUTCString();
-    console.log(lastModified)
     return (
 
         <div>
