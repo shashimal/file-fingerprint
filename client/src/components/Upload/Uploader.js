@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import CryptoJS from 'crypto-js';
 
 import {captureFile, readFileContent, cancelFileUpload, setCryptoValues} from '../../actions/index'
-import FingerprintOption from "../FingerprintOption";
+import FingerprintOption from "./FingerprintOption";
 
 class Uploader extends Component {
 
