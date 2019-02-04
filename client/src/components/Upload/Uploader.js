@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import CryptoJS from 'crypto-js';
 
 import {captureFile, readFileContent, cancelFileUpload,setCryptoValues} from '../../actions/index'
+import FingerprintOption from "../FingerprintOption";
 
 class Uploader extends Component {
 
@@ -69,9 +70,12 @@ class Uploader extends Component {
 
 
         let fileDetails = "";
+        let fingerprintOptions = "";
 
         if (this.props.fileObject.fileMetadata != null) {
             fileDetails = <FileInfo fileObject={this.props.fileObject}/>
+            fingerprintOptions = <FingerprintOption cancel={this.onCancel}/>
+
         }
 
         return (
@@ -101,6 +105,7 @@ class Uploader extends Component {
                 </Dropzone>
 
                 {fileDetails}
+                {fingerprintOptions}
 
             </div>
         );
