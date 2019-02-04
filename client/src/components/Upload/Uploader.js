@@ -4,7 +4,7 @@ import FileInfo from "./FileInfo";
 import {connect} from 'react-redux';
 import CryptoJS from 'crypto-js';
 
-import {captureFile, readFileContent, cancelFileUpload,setCryptoValues} from '../../actions/index'
+import {captureFile, readFileContent, cancelFileUpload, setCryptoValues} from '../../actions/index'
 import FingerprintOption from "../FingerprintOption";
 
 class Uploader extends Component {
@@ -19,11 +19,27 @@ class Uploader extends Component {
         }
     };
 
+    onCancel = () => {
+        this.props.cancelFileUpload();
+    };
+
+    onGenerateCertificate = ()=> {
+
+    };
+
+    onSendToBlockchain = () => {
+
+    };
+
+    onCertificateAndBlockchain = ()=> {
+
+    };
+
     readFile = (file) => {
         const reader = new window.FileReader();
         reader.readAsArrayBuffer(file);
         reader.onloadend = () => {
-            let result  = Buffer(reader.result)
+            let result = Buffer(reader.result);
             this.props.readFileContent(result);
 
             this.props.setCryptoValues(this.generateCryptoValues(result));
@@ -31,12 +47,7 @@ class Uploader extends Component {
         }
     };
 
-    onCancel = () => {
-        this.props.cancelFileUpload();
-    };
-
     generateCryptoValues = (file) => {
-
         const cryptoOjbect = {
             md5: CryptoJS.MD5(file).toString(),
             sha1: CryptoJS.SHA1(file).toString(),
@@ -73,9 +84,13 @@ class Uploader extends Component {
         let fingerprintOptions = "";
 
         if (this.props.fileObject.fileMetadata != null) {
-            fileDetails = <FileInfo fileObject={this.props.fileObject}/>
-            fingerprintOptions = <FingerprintOption cancel={this.onCancel}/>
-
+            fileDetails = <FileInfo fileObject={this.props.fileObject}/>;
+            fingerprintOptions = <FingerprintOption
+                cancel={this.onCancel}
+                sendToBlockchain={this.onSendToBlockchain}
+                generateCertificate={this.onGenerateCertificate}
+                certificateAndBlockchain={this.onCertificateAndBlockchain}
+            />;
         }
 
         return (
@@ -88,9 +103,9 @@ class Uploader extends Component {
                     onFileDialogCancel={this.onCancel.bind(this)}>
 
                     {({getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, acceptedFiles, rejectedFiles}) => {
-                        let styles = {...baseStyle}
-                        styles = isDragActive ? {...styles, ...activeStyle} : styles
-                        styles = isDragReject ? {...styles, ...rejectStyle} : styles
+                        let styles = {...baseStyle};
+                        styles = isDragActive ? {...styles, ...activeStyle} : styles;
+                        styles = isDragReject ? {...styles, ...rejectStyle} : styles;
 
                         return (
                             <div {...getRootProps()} style={styles}>
@@ -119,4 +134,4 @@ const mapStateToProps = (state) => {
 };
 
 
-export default connect(mapStateToProps, {captureFile, readFileContent, cancelFileUpload,setCryptoValues})(Uploader);
+export default connect(mapStateToProps, {captureFile, readFileContent, cancelFileUpload, setCryptoValues})(Uploader);
