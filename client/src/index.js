@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,7 +13,7 @@ import reducers from './reducers';
 import * as serviceWorker from './serviceWorker';
 
 const store = createStore(reducers, applyMiddleware(thunk));
-ReactDOM.render(<Provider store={store}><Main/></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><BrowserRouter><Main/></BrowserRouter></Provider>, document.getElementById('root'));
 
 
 

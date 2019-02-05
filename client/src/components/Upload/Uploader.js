@@ -4,6 +4,7 @@ import FileInfo from "./FileInfo";
 import {connect} from 'react-redux';
 import CryptoJS from 'crypto-js';
 
+
 import {captureFile, readFileContent, cancelFileUpload, setCryptoValues} from '../../actions/index'
 import FingerprintOption from "./FingerprintOption";
 
@@ -23,17 +24,7 @@ class Uploader extends Component {
         this.props.cancelFileUpload();
     };
 
-    onGenerateCertificate = ()=> {
 
-    };
-
-    onSendToBlockchain = () => {
-
-    };
-
-    onCertificateAndBlockchain = ()=> {
-
-    };
 
     readFile = (file) => {
         const reader = new window.FileReader();
@@ -87,9 +78,6 @@ class Uploader extends Component {
             fileDetails = <FileInfo fileObject={this.props.fileObject}/>;
             fingerprintOptions = <FingerprintOption
                 cancel={this.onCancel}
-                sendToBlockchain={this.onSendToBlockchain}
-                generateCertificate={this.onGenerateCertificate}
-                certificateAndBlockchain={this.onCertificateAndBlockchain}
             />;
         }
 

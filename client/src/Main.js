@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Header from './components/Header/Header'
 import Uploader from './components/Upload/Uploader'
+import MainNavigation from "./components/Navigation/ManinNavigation";
 
 class Main extends Component {
 
@@ -10,7 +11,7 @@ class Main extends Component {
             <div className='container'>
                 <div className="row">
                     <Header/>
-                    <Uploader/>
+                    <MainNavigation/>
                 </div>
             </div>
         )
