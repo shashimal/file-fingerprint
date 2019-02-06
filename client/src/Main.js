@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import Header from './components/Header/Header'
-import Uploader from './components/Upload/Uploader'
 import MainNavigation from "./components/Navigation/ManinNavigation";
 
 class Main extends Component {
