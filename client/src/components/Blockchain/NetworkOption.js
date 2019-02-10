@@ -1,30 +1,40 @@
 import React, {Component} from "react";
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
 import Checkbox from '../Form/Checkbox';
-import networks from '../../common/networks';
-import {loadNetworks,updateNetworks} from "../../actions/index";
+import {
+    updateNetworkSelection,
+    calculateEstimatedETHCost,
+    updateEstimatedTxCostValues, getEstimatedBTCPrice
+} from "../../actions/index";
 
 class NetworkOption extends Component {
 
     onHandleCheckedElement = (event) => {
-        let checkboxItems = this.props.blockchainObject.networks;
+        let networks = this.props.networks;
 
-        checkboxItems.forEach(checkbox => {
+        networks.forEach(checkbox => {
             if (checkbox.value === event.target.value) {
                 checkbox.isChecked = event.target.checked;
             }
         });
 
-        this.props.updateNetworks(checkboxItems);
+        this.props.updateNetworkSelection(networks);
+
+        if (event.target.checked) {
+            if (event.target.value === "ETH") {
+                this.props.calculateEstimatedETHCost(event.target.value, this.props.eth.web3);
+            }
+            if (event.target.value === "BTC") {
+                this.props.getEstimatedBTCPrice(event.target.value);
+            }
+        } else {
+            let updatedTxCostValues = this.props.estimatedNetworkTxCost.filter(item => item.network !== event.target.value);
+            this.props.updateEstimatedTxCostValues(updatedTxCostValues);
+        }
     };
 
-    componentDidMount() {
-        this.props.loadNetworks(networks);
-    }
-
     render() {
-        console.log(this.props.blockchainObject);
-        let listOfNetworks = this.props.blockchainObject.networks.map((item) => {
+        let listOfNetworks = this.props.networks.map((item) => {
             return (
                 <div className="checkbox" key={item.id}>
                     <label>
@@ -33,7 +43,6 @@ class NetworkOption extends Component {
                     </label>
                 </div>)
         });
-
         return (
             <div>
                 <div className="panel panel-default">
@@ -49,8 +58,16 @@ class NetworkOption extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        blockchainObject: state.blockchainObject
+        networks: state.blockchainObject.networks,
+        estimatedNetworkTxCost: state.blockchainObject.estimatedNetworkTxCost,
+        eth: state.ethObject
     }
 };
 
-export default connect(mapStateToProps, {loadNetworks,updateNetworks})(NetworkOption);
+export default connect(mapStateToProps,
+    {
+        updateNetworkSelection,
+        calculateEstimatedETHCost,
+        getEstimatedBTCPrice,
+        updateEstimatedTxCostValues
+    })(NetworkOption);

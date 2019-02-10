@@ -1,25 +1,30 @@
 import React, {Component} from 'react';
 import NetworkOption from "./NetworkOption";
 import Header from "./Header";
-import Payment from "./Payment";
 import {connect} from "react-redux";
-
+import networks from "../../common/networks";
+import {loadNetworks} from "../../actions/index";
+import NetworkPayment from "./NetworkPayment";
 
 class Blockchain extends Component {
 
-    render() {
+    componentDidMount() {
+        this.props.loadNetworks(networks);
+    }
 
-        let paymentDetails = "";
-        let selectedNetWorks = this.props.blockchainObject.networks.filter((network)=> {return network.isChecked === true});
-        if(selectedNetWorks.length > 0) {
-            paymentDetails = <Payment/>;
+    render() {
+        let networkPayment = "";
+        let selectedNetworks = this.props.networks.filter(network => network.isChecked === true);
+
+        if (selectedNetworks.length > 0) {
+            networkPayment = <NetworkPayment/>;
         }
 
         return (
             <div>
                 <Header/>
                 <NetworkOption/>
-                {paymentDetails}
+                {networkPayment}
             </div>
         );
     }
@@ -27,9 +32,7 @@ class Blockchain extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        blockchainObject: state.blockchainObject
+        networks: state.blockchainObject.networks
     }
 };
-
-
-export default connect(mapStateToProps,null) (Blockchain);
+export default connect(mapStateToProps, {loadNetworks})(Blockchain);

@@ -26,7 +26,7 @@ export default [
     },
     {
         id: 6,
-        value: 'BTC.',
+        value: 'BTC',
         isChecked: false
     },
 
