@@ -8,11 +8,15 @@ import NetworkPayment from "./NetworkPayment";
 
 class Blockchain extends Component {
 
-    componentDidMount() {
+   /* componentDidMount() {
         this.props.loadNetworks(networks);
-    }
+    }*/
+
+
 
     render() {
+        console.log("render")
+
         let networkPayment = "";
         let selectedNetworks = this.props.networks.filter(network => network.isChecked === true);
 

@@ -7,7 +7,7 @@ import Blockchain from "../Blockchain/Blockchain";
 const MainNavigation = () => (
     <Switch>
         <Route exact path='/' component={Uploader}></Route>
-        <Route exact path='/blockchain' component={Blockchain}></Route>
+        <Route  path='/blockchain' component={Blockchain}></Route>
     </Switch>
 );
 
